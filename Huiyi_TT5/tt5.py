@@ -4,6 +4,7 @@ import sys
 # import functions from PA #5.
 from util import linear_regression, prepend_ones_column
 
+
 def read_file(filename):
     '''
     Read data from the specified file.  Split the lines and convert
@@ -21,34 +22,38 @@ def read_file(filename):
         data = np.loadtxt(f, delimiter=',', dtype=np.float64)
         return labels, data
 
+
 def var(y):
     # replace 0.0 with proper return value
-    return 0.0
+    mean = np.mean(y)
+    variance = np.mean((y - mean) ** 2)
+    return variance
 
 
 def task2(b):
     ### Replace 0.0 with code to extract the desired slice
     print("rows 0, 1, and 2.")
-    print(0.0)
+    print(b[0:3, :])
     print()
     print("rows 0, 1, and 5")
-    print(0.0)
+    print(b[[0, 1, 5], :])
     print()
     print("columns 0, 1, and 2")
-    print(0.0)
+    print(b[:, 0:3])
     print()
     print("columns 0, 1, and 3")
-    print(0.0)
+    print(b[:, [0, 1, 3]])
     print()
     print("columns 0, 1, and 2 from rows 2 and 3.")
-    print(0.0)
+    print(b[2:4, 0:3])
     print()
 
-def go():
+
+def go() :
     city_col_names, city_data = read_file("city_data.csv")
 
-    graffiti = city_data[:,0]
-    garbage = city_data[:,3]
+    graffiti = city_data[:, 0]
+    garbage = city_data[:, 3]
 
     print("Task 1")
     print("GRAFFITI:", var(graffiti))
@@ -56,25 +61,22 @@ def go():
     print()
     print()
 
-
     print("Task 2")
-    b = (np.arange(24)**2).reshape(6,4)
+    b = (np.arange(24) ** 2).reshape(6, 4)
     task2(b)
-
 
     print("Task 3")
     ### REPLACE 0.0 with appropriate call to linear regression
-    print("Rodents, Garbage => Crime", 0.0)
+    print("Rodents, Garbage => Crime", linear_regression(prepend_ones_column(city_data[:, 2:4]), city_data[:, 7]))
     print()
     print()
-
 
     print("Task 4")
     ### REPLACE 0.0 with appropriate call to linear regression
-    print("Graffiti => Crime:", 0.0)
+    print("Graffiti => Crime:", linear_regression(prepend_ones_column(city_data[:, [0]]), city_data[:, 7]))
     print()
     print()
+
 
 if __name__ == "__main__":
     go()
-
